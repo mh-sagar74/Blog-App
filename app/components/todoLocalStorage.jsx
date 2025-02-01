@@ -1,12 +1,9 @@
 export function getTodoDataLocalStorage() {
-  const totalPosts =
-    typeof window !== "undefined" ? localStorage.getItem("MyBlog") : false;
+  const totalPosts = localStorage.getItem("MyBlog");
   if (!totalPosts) return [];
   return JSON.parse(totalPosts);
 }
 
 export function setTodoDataLocalStorage(posts) {
-  return typeof window !== "undefined"
-    ? localStorage.setItem("MyBlog", JSON.stringify(posts))
-    : false;
+  return localStorage.setItem("MyBlog", JSON.stringify(posts));
 }
