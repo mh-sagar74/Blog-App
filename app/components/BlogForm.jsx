@@ -59,9 +59,9 @@ export default function BlogForm() {
       />
       <Btn onCLick={handlePostBtn} click={"Post"} />
       {isSuccess ? (
-        <h1 className="text-white bg-blue-500">
+        <div className="text-white bg-blue-500">
           Your blog posted successfully
-        </h1>
+        </div>
       ) : (
         ""
       )}
