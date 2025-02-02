@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Btn from "./Btn";
 import {
@@ -12,6 +12,7 @@ import Link from "next/link";
 
 export default function Blog() {
   const [allPosts, setAllPosts] = useState(() => getTodoDataLocalStorage());
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDltBtn = (key) => {
     setAllPosts(allPosts.filter((post) => post.key !== key));
@@ -23,6 +24,14 @@ export default function Blog() {
   const handleAddBlogBtn = () => {
     router.push("/create-blog");
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+  }, []);
+
+  if (!isLoading) {
+    return <div className="text-center">Loading...</div>;
+  }
 
   return (
     <div>

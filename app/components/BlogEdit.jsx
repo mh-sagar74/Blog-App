@@ -12,7 +12,10 @@ export default function BlogEdit() {
   const [edit, setEdit] = useState("");
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem("MyBlog")) || [];
+    const storedData =
+      JSON.parse(
+        typeof window !== "undefined" ? localStorage.getItem("MyBlog") : false
+      ) || [];
     const selectedPost = storedData.find((p) => p.key === key);
     if (selectedPost) {
       setEdit(selectedPost.post);
@@ -20,12 +23,17 @@ export default function BlogEdit() {
   }, [key]);
 
   const handleDoneBtn = () => {
-    let storedData = JSON.parse(localStorage.getItem("MyBlog")) || [];
+    let storedData =
+      JSON.parse(
+        typeof window !== "undefined" ? localStorage.getItem("MyBlog") : false
+      ) || [];
     const updatedData = storedData.map((p) =>
       p.key === key ? { ...p, post: edit } : p
     );
 
-    localStorage.setItem("MyBlog", JSON.stringify(updatedData));
+    typeof window !== "undefined"
+      ? localStorage.setItem("MyBlog", JSON.stringify(updatedData))
+      : false;
     router.push("/blog");
   };
 
