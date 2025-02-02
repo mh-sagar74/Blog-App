@@ -27,9 +27,9 @@ export default function Blog() {
   return (
     <div>
       {allPosts.map((post) => (
-        <div className="bg-gray-200 mb-6 pb-4" key={uuidv4()}>
+        <div className="bg-gray-200 mb-6 pb-4 rounded-lg" key={uuidv4()}>
           <div className="text-wrap" key={post.key}>
-            <div className="font-semibold bg-gray-400 p-3 overflow-auto">
+            <div className="font-semibold bg-gray-400 p-3 overflow-auto rounded-tr-lg rounded-tl-lg">
               @{post.userName}
             </div>
             <div className="p-3 overflow-auto">{post.post}</div>
@@ -41,7 +41,10 @@ export default function Blog() {
                 <Link
                   href={{
                     pathname: "/edit-blog",
-                    query: { name: post.userName, data: post.post },
+                    query: {
+                      name: post.userName,
+                      key: post.key,
+                    },
                   }}>
                   <Btn click={"Edit"}></Btn>
                 </Link>

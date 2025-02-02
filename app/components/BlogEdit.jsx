@@ -3,28 +3,41 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import Btn from "./Btn";
 import TextArea from "./TextArea";
-import { useState } from "react";
-import { setTodoDataLocalStorage } from "./todoLocalStorage";
+import { useEffect, useState } from "react";
 
 export default function BlogEdit() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [blog, setBlog] = useState(searchParams.get("data"));
+  const key = searchParams.get("key");
+  const [edit, setEdit] = useState("");
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("MyBlog")) || [];
+    const selectedPost = storedData.find((p) => p.key === key);
+    if (selectedPost) {
+      setEdit(selectedPost.post);
+    }
+  }, [key]);
 
   const handleDoneBtn = () => {
-    // setTodoDataLocalStorage(blog);
+    let storedData = JSON.parse(localStorage.getItem("MyBlog")) || [];
+    const updatedData = storedData.map((p) =>
+      p.key === key ? { ...p, post: edit } : p
+    );
+
+    localStorage.setItem("MyBlog", JSON.stringify(updatedData));
     router.push("/blog");
   };
 
   return (
     <div>
-      <h1>@{searchParams.get("name")}</h1>
+      <h1 className="font-semibold pb-3">@{searchParams.get("name")}</h1>
       <TextArea
         label="Edit your Blog"
-        value={blog}
-        onChange={(e) => setBlog(e.target.value)}
+        value={edit}
+        onChange={(e) => setEdit(e.target.value)}
       />
-      <Btn click="Done" onCLick={handleDoneBtn} />
+      <Btn disabled={!edit.length} click="Done" onCLick={handleDoneBtn} />
     </div>
   );
 }
