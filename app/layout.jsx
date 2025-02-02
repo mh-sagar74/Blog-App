@@ -1,6 +1,7 @@
 import "./globals.css";
 import Link from "next/link";
 import { Roboto } from "next/font/google";
+import { Suspense } from "react";
 
 const roboto = Roboto({ weight: "400", subsets: ["latin"] });
 
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
           </li>
         </ul>
         <hr className="mb-6" />
-        {children}
+        <Suspense fallback={null}>{children}</Suspense>
       </body>
     </html>
   );
