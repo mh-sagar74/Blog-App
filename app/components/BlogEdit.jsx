@@ -12,7 +12,7 @@ export default function BlogEdit() {
   const [blog, setBlog] = useState(searchParams.get("data"));
 
   const handleDoneBtn = () => {
-    setTodoDataLocalStorage(blog);
+    // setTodoDataLocalStorage(blog);
     router.push("/blog");
   };
 
