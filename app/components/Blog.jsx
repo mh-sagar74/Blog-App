@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Btn from "./Btn";
 import {
@@ -8,6 +8,7 @@ import {
   setTodoDataLocalStorage,
 } from "./todoLocalStorage";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Blog() {
   const [allPosts, setAllPosts] = useState(() => getTodoDataLocalStorage());
@@ -35,8 +36,19 @@ export default function Blog() {
             <div className="pl-3 text-xs text-gray-600">
               Posted on {post.date} at {post.time}
             </div>
-            <div className="ml-3 mt-3">
-              <Btn onCLick={() => handleDltBtn(post.key)} click={"Delete"} />
+            <div className="flex">
+              <div className="ml-3 mt-3">
+                <Link
+                  href={{
+                    pathname: "/edit-blog",
+                    query: { name: post.userName, data: post.post },
+                  }}>
+                  <Btn click={"Edit"}></Btn>
+                </Link>
+              </div>
+              <div className="ml-3 mt-3">
+                <Btn onCLick={() => handleDltBtn(post.key)} click={"Delete"} />
+              </div>
             </div>
           </div>
         </div>
